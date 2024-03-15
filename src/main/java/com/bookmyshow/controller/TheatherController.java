@@ -29,7 +29,7 @@ public class TheatherController
 	@PostMapping("/addTheaterSeats")
 	public ResponseEntity addTheaterSeats(@RequestBody AddTheaterSeatsRequest addTheaterSeatsRequest)
 	{
-		String addTheaterSeats = theaterService.AddTheaterSeats(addTheaterSeatsRequest);
+		String addTheaterSeats = theaterService.addTheaterSeats(addTheaterSeatsRequest);
 		return new ResponseEntity(addTheaterSeats,HttpStatus.OK);
 	}
 }

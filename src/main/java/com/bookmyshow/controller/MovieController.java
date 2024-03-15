@@ -1,5 +1,7 @@
 package com.bookmyshow.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,10 +20,13 @@ public class MovieController
 	@Autowired
 	private MovieService movieService;
 	
+	private static final Logger logger=LoggerFactory.getLogger(MovieController.class);
+	
 	@PostMapping("/addMovie")
 	public String addMovie(@RequestBody Movie movie)
 	{
 		String addMovie = movieService.addMovie(movie);
+		logger.info("Movie add controller : {} "+addMovie);
 		return addMovie;
 	}
 	
@@ -29,6 +34,7 @@ public class MovieController
 	public String updateMovieAttribute(@RequestBody UpdateMovieRequest movieRequest)
 	{
 		String updateMovieAttribute = movieService.updateMovieAttribute(movieRequest);
+		logger.info("updateMovieAttribute controller : {} "+updateMovieAttribute);
 		return updateMovieAttribute;
 	}
 	

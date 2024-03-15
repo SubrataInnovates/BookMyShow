@@ -7,6 +7,6 @@ import com.bookmyshow.entity.Theater;
 public interface TheaterService 
 {
 	public String addTheater(AddTheaterRequest addTheaterRequest);
-	public String AddTheaterSeats(AddTheaterSeatsRequest addTheaterSeatsRequest);
+	public String addTheaterSeats(AddTheaterSeatsRequest addTheaterSeatsRequest);
 
 }

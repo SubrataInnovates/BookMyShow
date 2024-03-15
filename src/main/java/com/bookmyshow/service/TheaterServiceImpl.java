@@ -42,71 +42,73 @@ public class TheaterServiceImpl implements TheaterService
 		return "Theater is added in db " +save.getTheaterId();
 	}
 	@Override
-	public String AddTheaterSeats(AddTheaterSeatsRequest addTheaterSeatsRequest)
-	{
-		int noOfClassicSeats = addTheaterSeatsRequest.getNoOfClassicSeats();
-		int noOfPremiumSeats = addTheaterSeatsRequest.getNoOfPremiumSeats();
-		
-		int theaterId = addTheaterSeatsRequest.getTheaterId();
-		Theater theater = repository.findById(theaterId).get();
-		
-		int classicSeatCount=0;
-		
-		char ch='A';
-		int rowNo=1;
-		List<TheaterSeat> theaterSeats=new ArrayList<>();
-		
-		while(classicSeatCount<noOfClassicSeats)
-		{
-			String seatNo=rowNo+ch+"";
-			TheaterSeat theaterSeat =
-					TheaterSeat.builder()
-					.seatNo(seatNo)
-					.theater(theater)
-					.seatType(SeatType.CLASSIC)
-					.build();
-			
-			theaterSeats.add(theaterSeat);
-			
-			ch++;
-			
-			if(classicSeatCount%5==0)
-			{
-				rowNo+=1;
-				ch='A';
-			}
-			classicSeatCount++;
-		}
-		
-		int premiumSeatCount=0;
-				
-				ch='A';
-				rowNo+=1;
-				
-				
-				while(premiumSeatCount<noOfPremiumSeats)
-				{
-					String seatNo=rowNo+ch+"";
-					TheaterSeat theaterSeat = TheaterSeat.builder()
-							.seatNo(seatNo)
-							.seatType(SeatType.PREMIUM)
-							.theater(theater)
-							.build();
-					
-					theaterSeats.add(theaterSeat);
-					
-					ch++;
-					
-					if(premiumSeatCount%5==0)
-					{
-						rowNo+=1;
-						ch='A';
-					}
-					premiumSeatCount++;
-				}
-				List<TheaterSeat> saveAll = theaterSeatRepository.saveAll(theaterSeats);
-				
-				return "Theater seats have been generated !!"+saveAll;
-	}
+    public String addTheaterSeats(AddTheaterSeatsRequest addTheaterSeatsRequest) {
+        int noOfClassicSeats = addTheaterSeatsRequest.getNoOfClassicSeats();
+        int noOfPremiumSeats = addTheaterSeatsRequest.getNoOfPremiumSeats();
+        int theaterId = addTheaterSeatsRequest.getTheaterId();
+
+        Theater theater = repository.findById(theaterId).orElse(null);
+
+        if (theater == null) {
+            return "Theater with ID " + theaterId + " not found.";
+        }
+
+        List<TheaterSeat> theaterSeats = new ArrayList<>();
+        int classicSeatCount = 1;
+        char ch = 'A';
+        int rowNo = 1;
+
+        // Generate classic seats
+        while (classicSeatCount <= noOfClassicSeats) {
+            String seatNo = rowNo + "" + ch;
+            TheaterSeat theaterSeat = TheaterSeat.builder()
+                    .seatNo(seatNo)
+                    .seatType(SeatType.CLASSIC)
+                    .theater(theater)
+                    .build();
+
+            theaterSeats.add(theaterSeat);
+
+            ch++;
+
+            if (classicSeatCount % 5 == 0) {
+                rowNo++;
+                ch = 'A';
+            }
+
+            classicSeatCount++;
+        }
+
+        int premiumSeatCount = 1;
+        ch = 'A';
+
+        // Increment rowNo for premium seats
+        if (classicSeatCount % 5 != 1)
+            rowNo++;
+
+        // Generate premium seats
+        while (premiumSeatCount <= noOfPremiumSeats) {
+            String seatNo = rowNo + "" + ch;
+            TheaterSeat theaterSeat = TheaterSeat.builder()
+                    .seatNo(seatNo)
+                    .seatType(SeatType.PREMIUM)
+                    .theater(theater)
+                    .build();
+
+            theaterSeats.add(theaterSeat);
+
+            ch++;
+
+            if (premiumSeatCount % 5 == 0) {
+                rowNo++;
+                ch = 'A';
+            }
+            premiumSeatCount++;
+        }
+
+        List<TheaterSeat> savedTheaterSeats = theaterSeatRepository.saveAll(theaterSeats);
+
+        return "Theater seats have been generated and saved.";
+    }
 
 }
