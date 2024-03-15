@@ -27,6 +27,8 @@ public class Theater
 	private String name;
 	private String address;
 	private Integer noOfScreens;
+	@OneToMany(mappedBy = "theater",cascade = CascadeType.ALL)
+	private List<TheaterSeat> theaterSeats=new ArrayList<>();
 	
 
 }

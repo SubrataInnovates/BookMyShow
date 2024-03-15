@@ -105,8 +105,10 @@ public class TheaterServiceImpl implements TheaterService
             }
             premiumSeatCount++;
         }
+        theater.setTheaterSeats(theaterSeats);
 
-        List<TheaterSeat> savedTheaterSeats = theaterSeatRepository.saveAll(theaterSeats);
+        //List<TheaterSeat> savedTheaterSeats = theaterSeatRepository.saveAll(theaterSeats);
+        repository.save(theater);
 
         return "Theater seats have been generated and saved.";
     }
