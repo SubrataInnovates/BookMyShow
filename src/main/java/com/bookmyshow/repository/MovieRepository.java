@@ -6,5 +6,7 @@ import com.bookmyshow.entity.Movie;
 
 public interface MovieRepository extends JpaRepository<Movie,Integer>
 {
+	Movie findMovieByMovieName(String movieName);
 
+	
 }

@@ -13,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+//import jakarta.validation.constraints.NotNull;
+//import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,8 +30,8 @@ public class TheaterSeat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer theaterSeatId;
 
-    
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "Seat number must be alphanumeric")
+
+   @Pattern(regexp = "^[A-Za-z0-9]+$", message = "Seat number must be alphanumeric")
     private String seatNo;
 
     @Nonnull
